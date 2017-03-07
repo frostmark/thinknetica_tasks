@@ -10,7 +10,6 @@ c = gets.chomp.to_f
 d = b ** 2 - (4 * a * c)
 
 if d > 0
-  
   d_sqrt = Math.sqrt(d)
   x_1 = (-b + d_sqrt) / (2 * a)
   x_2 = (-b - d_sqrt) / (2 * a)
