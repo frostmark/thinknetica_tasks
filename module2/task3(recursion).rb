@@ -5,4 +5,4 @@ def fibonacci(to, numbers=[0,1])
   return fibonacci(to, numbers)
 end
 
-p fibonacci(10000)
+p fibonacci(100)
