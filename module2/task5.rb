@@ -31,11 +31,11 @@ def leap?(year)
 end
 
 def day_of_year(day, month, year)
-  return day if month ==  1 # if January
+  return day if month ==  1
 
-  MONTHS[1] = 29 if leap? year # patch February if year leap
+  MONTHS[1] = 29 if leap? year
 
   MONTHS.take(month - 1).reduce(:+) + day
 end
 
-p day_of_year(day, month, year) # day_of_year(13, 31, 2000) => 366
+p day_of_year(day, month, year)
