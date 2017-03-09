@@ -1,5 +1,7 @@
 result = {}
 
-(('a'..'z').to_a - %w(a e y o u i)).each_with_index{|v, i| result[i+1] = v }
+vowels = %w(a e y o u i)
 
-print result
+('a'..'z').to_a.each.with_index(1){|v,i| result[i] = v if vowels.include? v }
+
+puts result
