@@ -16,7 +16,7 @@ while true do
     next
   end
 
-  puts "Year:"
+  print "Год: "
   year = gets.chomp.to_i
   if year < 1
     puts "Год должен быть больше 1"
