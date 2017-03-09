@@ -9,7 +9,7 @@ loop do
   good_price = gets.chomp.to_f
 
   print 'Введите кол-во товара: '
-  good_quantity = gets.chomp.to_i
+  good_quantity = gets.chomp.to_f
 
 
   cart[good_name] = {
