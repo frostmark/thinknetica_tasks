@@ -3,42 +3,74 @@ require_relative './train'
 require_relative './station'
 require_relative './route'
 
-sapsan = Train.new(number: 1, type: :passenger, carriages: 5)
-cargo_train = Train.new(number: 2, type: :cargo, carriages: 25)
+stations = []
+%w(Moscow Saint-Petersburg Yekaterinburg).each do |name|
+  stations << Station.new(name)
+end
 
+sapsan = Train.new(number: 1, type: 'passenger', carriages: 5)
+cargo_train = Train.new(number: 2, type: 'cargo', carriages: 25)
 
-puts sapsan.speed
-sapsan.speed_up(15)
-sapsan.speed_up(45)
+sapsan.speed_up 60
+puts "Sapsan current speed: #{sapsan.speed}"
+
 sapsan.speed_down
-sapsan.speed_up(3)
-puts sapsan.speed
+puts "Sapsan current speed: #{sapsan.speed}"
+
+puts "Sapsan qty carriages: #{sapsan.quantity_carriages}"
 
 sapsan.add_carriage
-puts sapsan.carriages
-sapsan.speed_down
+puts "Sapsan qty carriages: #{sapsan.quantity_carriages}"
+
 sapsan.remove_carriage
-puts sapsan.carriages
-puts sapsan
+puts "Sapsan qty carriages: #{sapsan.quantity_carriages}"
 
-moscow = Station.new('Moscow')
-petushki = Station.new('Petushki')
+puts stations
+
+route = Route.new(stations.first, stations.last)
+
+route.stations.each do |station|
+  p "Станция -- #{station.name}"
+end
+
+route.add_station(1, stations[1])
+
+route.stations.each do |station|
+  p "Станция -- #{station.name}"
+end
+
+sapsan.route = route
+cargo_train.route = route
+
+puts "Sapsan current station: #{sapsan.station.name}"
+
+puts "Sapsan next station: #{sapsan.next_station.name}"
+
+puts "Cargo train current station: #{cargo_train.station.name}"
+puts "Cargo train next station: #{cargo_train.next_station.name}"
+
+puts "Trains in #{stations.first.name}:"
+stations.first.trains.each do |train|
+  puts "Train number: #{train.number}"
+end
+
+puts "Station trains by type: "
+puts stations.first.trains_by_type
+
+sapsan.go
+puts "Sapsan current station: #{sapsan.station.name}"
 
 
-village_1 = Station.new('Village 1')
-village_2 = Station.new('Village 2')
+puts "Trains in #{stations.first.name}:"
+stations.first.trains.each do |train|
+  puts "Train number: #{train.number}"
+end
 
-msk_pth_route = Route.new(moscow, petushki)
-msk_pth_route.add(village_1)
-msk_pth_route.add(village_2)
+puts "Trains in #{stations[1].name}:"
+stations[1].trains.each do |train|
+  puts "Trains: #{train.number}"
+end
 
-sapsan.route = msk_pth_route
-cargo_train.route = msk_pth_route
 
-6.times {
-  sapsan.go
-  sapsan.prev_station
-  sapsan.station
-  sapsan.next_station
-  puts "="*40
-}
+puts "Sapsan prev station: #{sapsan.prev_station.name}"
+
