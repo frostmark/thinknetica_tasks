@@ -56,11 +56,7 @@ class Train
 
     if @station_number == @route.stations.count - 1
       puts 'You\'ve reached the end of the road. Now take back!'
-
-      @route = @route.dup
-
-      @route.stations = @route.stations.reverse
-      @station_number = 0
+      return
     end
 
     @route.stations[@station_number].send_train self

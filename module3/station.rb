@@ -16,12 +16,6 @@ class Station
   end
 
   def trains_by_type(type)
-    result = @trains.select{|train| train.type == type}
-
-    if result.empty?
-      'There is no such type'
-    else
-      result
-    end
+    @trains.select{|train| train.type == type}
   end
 end

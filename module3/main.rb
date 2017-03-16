@@ -58,6 +58,8 @@ stations.first.trains_by_type("passenger").each do |t|
   puts "Train with number: #{t.number}"
 end
 
+puts "Station trains by type test #{stations.first.trains_by_type("test")}"
+
 puts "Station count trains by type passenger: #{stations.first.trains_by_type("passenger").count}"
 
 sapsan.go
