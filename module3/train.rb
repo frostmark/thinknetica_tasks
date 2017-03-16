@@ -1,5 +1,5 @@
 class Train
-  attr_reader :speed, :number, :type
+  attr_reader :speed, :number, :type, :carriages
 
   def initialize(number: 0, type: 'passenger', carriages: 0)
     @number = number
@@ -18,12 +18,8 @@ class Train
     @speed += speed
   end
 
-  def speed_down()
+  def speed_down
     @speed = 0
-  end
-
-  def quantity_carriages()
-    @carriages
   end
 
   def add_carriage
@@ -61,6 +57,8 @@ class Train
     if @station_number == @route.stations.count - 1
       puts 'You\'ve reached the end of the road. Now take back!'
 
+      @route = @route.dup
+
       @route.stations = @route.stations.reverse
       @station_number = 0
     end
@@ -77,9 +75,9 @@ class Train
     route_assigned!
 
     if @station_number.zero?
-      station_name = @route.stations[@station_number]
+      @route.stations[@station_number]
     else
-      prev_station_name =@route.stations[@station_number - 1]
+      @route.stations[@station_number - 1]
     end
   end
 

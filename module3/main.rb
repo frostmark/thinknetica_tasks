@@ -3,9 +3,8 @@ require_relative './train'
 require_relative './station'
 require_relative './route'
 
-stations = []
-%w(Moscow Saint-Petersburg Yekaterinburg).each do |name|
-  stations << Station.new(name)
+stations = %w(Moscow Saint-Petersburg Yekaterinburg).map do |name|
+  Station.new(name)
 end
 
 sapsan = Train.new(number: 1, type: 'passenger', carriages: 5)
@@ -17,13 +16,13 @@ puts "Sapsan current speed: #{sapsan.speed}"
 sapsan.speed_down
 puts "Sapsan current speed: #{sapsan.speed}"
 
-puts "Sapsan qty carriages: #{sapsan.quantity_carriages}"
+puts "Sapsan qty carriages: #{sapsan.carriages}"
 
 sapsan.add_carriage
-puts "Sapsan qty carriages: #{sapsan.quantity_carriages}"
+puts "Sapsan qty carriages: #{sapsan.carriages}"
 
 sapsan.remove_carriage
-puts "Sapsan qty carriages: #{sapsan.quantity_carriages}"
+puts "Sapsan qty carriages: #{sapsan.carriages}"
 
 puts stations
 
@@ -33,7 +32,7 @@ route.stations.each do |station|
   p "Станция -- #{station.name}"
 end
 
-route.add_station(1, stations[1])
+route.add_station(stations[1])
 
 route.stations.each do |station|
   p "Станция -- #{station.name}"
@@ -54,8 +53,12 @@ stations.first.trains.each do |train|
   puts "Train number: #{train.number}"
 end
 
-puts "Station trains by type: "
-puts stations.first.trains_by_type
+puts "Station trains by type passenger: "
+stations.first.trains_by_type("passenger").each do |t|
+  puts "Train with number: #{t.number}"
+end
+
+puts "Station count trains by type passenger: #{stations.first.trains_by_type("passenger").count}"
 
 sapsan.go
 puts "Sapsan current station: #{sapsan.station.name}"
@@ -70,6 +73,12 @@ puts "Trains in #{stations[1].name}:"
 stations[1].trains.each do |train|
   puts "Trains: #{train.number}"
 end
+
+sapsan.go
+puts "Sapsan current station: #{sapsan.station.name}"
+
+sapsan.go
+puts "Sapsan current station: #{sapsan.station.name}"
 
 
 puts "Sapsan prev station: #{sapsan.prev_station.name}"

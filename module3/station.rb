@@ -15,15 +15,13 @@ class Station
     puts "#{@name.capitalize} send train with number #{train.number}"
   end
 
-  def trains_by_type
-    result = {}
-    @trains.each do |train|
-      if result[train.type].nil? 
-        result[train.type] = 1
-      else
-        result[train.type] += 1
-      end
+  def trains_by_type(type)
+    result = @trains.select{|train| train.type == type}
+
+    if result.empty?
+      'There is no such type'
+    else
+      result
     end
-    result
   end
 end
