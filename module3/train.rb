@@ -52,12 +52,9 @@ class Train
 
   def go
     route_assigned!
+    return if @station_number == @route.stations.count - 1
+    
     self.speed_up(60) if @speed.zero?
-
-    if @station_number == @route.stations.count - 1
-      puts 'You\'ve reached the end of the road. Now take back!'
-      return
-    end
 
     @route.stations[@station_number].send_train self
 
