@@ -1,9 +1,12 @@
 class Carriage
+  include Vendorable
+
   TYPES = ['passenger', 'cargo']
 
   attr_reader :type, :owner
 
-  def initialize(type: 'passenger')
+  def initialize(type: 'passenger', **args)
+    @vendor = args[:vendor] || 'No name carriage vendor'
     self.type = type.to_s
   end
 

@@ -1,15 +1,24 @@
 class Train
+  include Vendorable
+  include InstanceCountable
+
   attr_reader :speed, :number, :carriages, :type, :route
 
   TYPES = ['passenger', 'cargo']
 
-  def initialize(number: 0, type: 'passenger')
+  @@trains = {}
+
+  def initialize(number: 0, type: 'passenger', **args)
     @number = number
     self.type = type
     @carriages = []
 
     @speed = 0
     @station_number = 0
+    @vendor = args[:vendor] || 'No name train vendor'
+
+    @@trains[@number] = self
+    register_instance
   end
 
   def speed_up(speed)
@@ -92,6 +101,12 @@ class Train
     route_assigned!
 
     @route.stations[@station_number + 1]
+  end
+
+  class << self
+    def find(number)
+      @@trains[number]
+    end
   end
 
   private
