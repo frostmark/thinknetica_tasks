@@ -1,10 +1,12 @@
 class Train
   include Vendorable
   include InstanceCountable
+  include Validateable
 
   attr_reader :speed, :number, :carriages, :type, :route
 
   TYPES = ['passenger', 'cargo']
+  NUMBER_FORMAT = /\A([a-z]|\d){3}-?([a-z]|\d){2}\z/i
 
   @@trains = {}
 
@@ -16,6 +18,8 @@ class Train
     @speed = 0
     @station_number = 0
     @vendor = args[:vendor] || 'No name train vendor'
+
+    validate!
 
     @@trains[@number] = self
     register_instance
@@ -36,11 +40,9 @@ class Train
         @carriages << carriage
         true
       else
-        puts 'Carriage type not valid'
         false
       end
     else
-      puts "Train in motion! Stop it!"
       false
     end
   end
@@ -50,16 +52,14 @@ class Train
 
     if @speed.zero?
       carriage = @carriages.pop
-      puts "Carraiges decreased to #{self.carriages.size}!"
       carriage.release # Remove train association
     else
-      puts "Train in motion! Stop it!"
+      false
     end
   end
 
   def route=(route)
     if @station_number > 0
-      puts 'You cannot assign route, train is on the way!'
       return
     end
 
@@ -109,7 +109,7 @@ class Train
     end
   end
 
-  private
+  protected
 
   def type=(type)
     @type = TYPES.include?(type) ? type : (raise 'Invalid train type!')
@@ -121,5 +121,11 @@ class Train
 
   def valid_carriage?(value)
     @type == value.type
+  end
+
+  def validate!
+    raise ArgumentError, 'Number format should be like xxx-xx', if NUMBER_FORMAT !~ @number.to_s
+    raise ArgumentError, "Type must be one of #{TYPES.join(', ')}", unless TYPES.include? @type
+    raise ArgumentError, 'Train with this number exist!' if @@trains[@number]
   end
 end

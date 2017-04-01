@@ -3,6 +3,7 @@ class Route
 
   def initialize(start_station, end_station)
     @stations = [start_station, end_station]
+    validate!
   end
 
   def add_station(station)
@@ -10,11 +11,22 @@ class Route
   end
 
   def remove_station(index)
-    return 'cannot remove first and end stations' if [0, @stations.count - 1].include(index)
+    return false if [0, @stations.count - 1].include(index)
     @stations.delete_at index
   end
 
   def to_s
     @stations.map{|s| s.name}.join(' – ')
+  end
+
+  protected
+
+  def validate!
+    stations.map{|s| station? s}
+    true
+  end
+
+  def station?(station)
+    raise ArgumentError, 'Argument must be instance of Station class' unless station.is_a?(Station)
   end
 end

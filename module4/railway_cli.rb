@@ -23,6 +23,9 @@ class RailwayCLI
     station = Station.new(name)
     @stations << station
     puts "Station #{station.name} was created!"
+  rescue => e
+    puts e.message
+    retry
   end
 
   def print_stations
@@ -47,6 +50,10 @@ class RailwayCLI
     @routes << route
 
     puts "Route #{route} was created!"
+
+  rescue => e
+    puts e.message
+    retry
   end
 
   def print_routes
@@ -71,6 +78,10 @@ class RailwayCLI
 
     @trains << train
     puts "#{type} train with number #{train.number} was created!"
+
+  rescue => e
+    puts e.message
+    retry
   end
 
   def print_trains
@@ -96,6 +107,9 @@ class RailwayCLI
     train.route = route
 
     puts "Route added!"
+  rescue => e
+    puts e.message
+    retry
   end
 
   def run_train

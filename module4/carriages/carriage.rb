@@ -1,5 +1,6 @@
 class Carriage
   include Vendorable
+  include InstanceCountable
 
   TYPES = ['passenger', 'cargo']
 
@@ -8,12 +9,13 @@ class Carriage
   def initialize(type: 'passenger', **args)
     @vendor = args[:vendor] || 'No name carriage vendor'
     self.type = type.to_s
+
+    register_instance
   end
 
   def owner=(train)
     if @owner
-      puts "Carriage already attached to train with number: #{@owner.number}"
-      return
+      return false
     end
 
     @owner = train
@@ -29,14 +31,12 @@ class Carriage
 
   def release
     unless @owner
-      puts 'Carriage yet have not attached to train!'
       return
     end
 
     train_number = @owner.number
     @owner = nil
 
-    puts "Carriage dettached from train with number: #{train_number}"
     self
   end
 end

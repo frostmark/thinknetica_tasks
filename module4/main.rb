@@ -1,7 +1,7 @@
 require 'byebug'
 
 require_relative 'concerns/vendorable'
-
+require_relative 'concerns/instance_countable'
 require_relative 'trains/cargo_train'
 require_relative 'trains/passenger_train'
 require_relative 'carriages/cargo_carriage'
