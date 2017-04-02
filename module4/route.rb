@@ -22,7 +22,7 @@ class Route
   protected
 
   def validate!
-    stations.map{|s| station? s}
+    stations.each{|s| station? s}
     true
   end
 
