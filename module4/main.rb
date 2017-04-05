@@ -10,7 +10,10 @@ require_relative 'carriages/passenger_carriage'
 require_relative 'station'
 require_relative 'route'
 require_relative 'railway_cli'
+require_relative 'test'
 
 app = RailwayCLI.new
+
+app = test app
 
 app.execute

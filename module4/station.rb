@@ -30,6 +30,11 @@ class Station
     @trains.select{|train| train.type == type}
   end
 
+  def process(&block)
+    raise ArgumentError, 'Method expects a block!' unless block_given?
+    @trains.each { |t| block.call t }
+  end
+
   class << self
     def all
       @@stations

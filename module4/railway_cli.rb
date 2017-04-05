@@ -17,6 +17,29 @@ class RailwayCLI
 
   private
 
+  def reserve_seat
+    pass_carriages = @carriages.select{|c| c.type == 'passenger'}
+    if pass_carriages.empty?
+      puts "Passenger carriages do not yet exist"
+      return
+    end
+
+    puts "List of carriages:"
+    pass_carriages.each_with_index { |c, i| puts "#{i+1} - #{c}"}
+
+    puts "Carriage number:"
+    number = gets.chomp.to_i
+    car = pass_carriages.fetch(number - 1)
+    puts "Avialable seats: #{car.free_seats}"
+    puts "Seat number:"
+    seat = gets.chomp.to_i
+    car.reserve_seat(seat)
+    puts "Seat was number #{seat} was resevred!"
+  rescue => e
+    puts e.message
+    retry
+  end
+
   def create_station
     print 'Station name: '
     name = gets.chomp
@@ -50,10 +73,29 @@ class RailwayCLI
     @routes << route
 
     puts "Route #{route} was created!"
-
   rescue => e
     puts e.message
     retry
+  end
+
+  def fill_capacity
+    cargo_carriages = @carriages.select { |c| c.type == 'cargo' }
+    if cargo_carriages.empty?
+      puts "Cargo carriages do not yet exist"
+      return
+    end
+
+    puts "List of carriages:"
+    cargo_carriages.each_with_index { |c, i| puts "#{i+1} - #{c}"}
+
+    puts "Carriage number:"
+    number = gets.chomp.to_i
+    car = cargo_carriages.fetch(number - 1)
+    puts "Fill with value:"
+    capacity = gets.chomp.to_i
+    car.fill_capacity(capacity)
+    puts "Capacity was changed!"
+    puts car
   end
 
   def print_routes
@@ -85,7 +127,7 @@ class RailwayCLI
   end
 
   def print_trains
-    @trains.each_with_index{|t,i| puts "#{i + 1} – train №#{t.number} type: #{t.type}"}
+    @trains.each_with_index{|t,i| puts "#{i + 1} – train №#{t.number} type: #{t.type} carriages: #{t.carriages.count}"}
   end
 
   def assign_route
@@ -237,7 +279,7 @@ class RailwayCLI
 
   def show_menu
     puts 'Enter number what you want do.'
-    puts 'The following actions are avaialable:'
+    puts 'The following actions are available:'
     puts <<~ACTIONS
       Stations:
       [1] - Create station
@@ -260,6 +302,8 @@ class RailwayCLI
       Carriages:
       [13] - Create carriage
       [14] - List of carriages
+      [15] - Reserve seat
+      [16] - Fill capacity
       ----------------------
     ACTIONS
 
@@ -294,8 +338,12 @@ class RailwayCLI
       create_carriage
     when 14
       print_carriages
+    when 15
+      reserve_seat
+    when 16
+      fill_capacity
     else
-      puts 'Action not avaialable!'
+      puts 'Action not available!'
     end
   end
 end

@@ -103,6 +103,11 @@ class Train
     @route.stations[@station_number + 1]
   end
 
+  def process(&block)
+    raise ArgumentError, 'Method expects a block!' unless block_given?
+    @trains.each { |c| block.call c }
+  end
+
   class << self
     def find(number)
       @@trains[number]
