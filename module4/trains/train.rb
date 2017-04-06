@@ -103,9 +103,9 @@ class Train
     @route.stations[@station_number + 1]
   end
 
-  def process(&block)
+  def each_carriage(&block)
     raise ArgumentError, 'Method expects a block!' unless block_given?
-    @trains.each { |c| block.call c }
+    @carriages.each { |c| block.call c }
   end
 
   class << self

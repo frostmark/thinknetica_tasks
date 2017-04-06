@@ -19,8 +19,7 @@ class PassengerCarriage < Carriage
   end
 
   def free_seats
-    seats = (1..@seats).to_a - @reserved_seats
-    seats.count
+    @seats - @reserved_seats.size
   end
 
   def reserved_seats

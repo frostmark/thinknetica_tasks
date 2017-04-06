@@ -31,11 +31,14 @@ def test app
   p cargo_carriage.available_capacity
   puts cargo_carriage
 
-
   app.routes << route
   app.stations << station_start
   app.stations << station_end
 
   cargo_train.route = route
+
+  station_start.each_train {|t| puts t.type }
+  cargo_train.each_carriage {|c| puts c.owner.type }
+
   app
 end
