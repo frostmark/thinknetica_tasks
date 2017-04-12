@@ -5,7 +5,7 @@ class Train
 
   attr_reader :speed, :number, :carriages, :type, :route
 
-  TYPES = ['passenger', 'cargo']
+  TYPES = %w[passenger cargo].freeze
   NUMBER_FORMAT = /\A([a-z]|\d){3}-?([a-z]|\d){2}\z/i
 
   @@trains = {}
@@ -59,9 +59,7 @@ class Train
   end
 
   def route=(route)
-    if @station_number > 0
-      return
-    end
+    return if @station_number > 0
 
     @route = route
     @route.stations[@station_number].taking_train self
@@ -71,7 +69,7 @@ class Train
     route_assigned!
     return if @station_number == @route.stations.count - 1
 
-    self.speed_up(60) if @speed.zero?
+    speed_up(60) if @speed.zero?
 
     @route.stations[@station_number].send_train self
 
@@ -79,7 +77,6 @@ class Train
 
     @route.stations[@station_number].taking_train self
   end
-
 
   def prev_station
     route_assigned!
@@ -103,9 +100,9 @@ class Train
     @route.stations[@station_number + 1]
   end
 
-  def each_carriage(&block)
+  def each_carriage
     raise ArgumentError, 'Method expects a block!' unless block_given?
-    @carriages.each { |c| block.call c }
+    @carriages.each { |c| yield c }
   end
 
   class << self
@@ -121,7 +118,7 @@ class Train
   end
 
   def route_assigned!
-    raise "Route not yet assigend!" unless @route
+    raise 'Route not yet assigend!' unless @route
   end
 
   def valid_carriage?(value)

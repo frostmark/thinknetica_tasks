@@ -36,11 +36,11 @@ class PassengerCarriage < Carriage
 
   def seat_exist?(number)
     msg = "Seat with number #{number} not exist!"
-    raise ArgumentError, msg unless (1..@seats).include? number
+    raise ArgumentError, msg unless (1..@seats).cover? number
   end
 
   def seat_available?(number)
-    msg = "Seat already was reserverd!"
+    msg = 'Seat already was reserverd!'
     raise msg if @reserved_seats.include? number
   end
 end

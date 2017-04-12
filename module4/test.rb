@@ -1,6 +1,6 @@
-def test app
-  station_start = Station.new "Start"
-  station_end = Station.new "End"
+def test(app)
+  station_start = Station.new 'Start'
+  station_end = Station.new 'End'
 
   route = Route.new station_start, station_end
 
@@ -37,8 +37,8 @@ def test app
 
   cargo_train.route = route
 
-  station_start.each_train {|t| puts t.type }
-  cargo_train.each_carriage {|c| puts c.owner.type }
+  station_start.each_train { |t| puts t.type }
+  cargo_train.each_carriage { |c| puts c.owner.type }
 
   app
 end

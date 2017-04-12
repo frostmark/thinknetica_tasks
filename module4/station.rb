@@ -23,16 +23,16 @@ class Station
   end
 
   def send_train(train)
-    @trains = @trains.delete_if {|t| t.number == train.number}
+    @trains = @trains.delete_if { |t| t.number == train.number }
   end
 
   def trains_by_type(type)
-    @trains.select{|train| train.type == type}
+    @trains.select { |train| train.type == type }
   end
 
-  def each_train(&block)
+  def each_train
     raise ArgumentError, 'Method expects a block!' unless block_given?
-    @trains.each { |t| block.call t }
+    @trains.each { |t| yield t }
   end
 
   class << self

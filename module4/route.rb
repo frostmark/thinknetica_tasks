@@ -16,13 +16,13 @@ class Route
   end
 
   def to_s
-    @stations.map{|s| s.name}.join(' – ')
+    @stations.map(&:name).join(' – ')
   end
 
   protected
 
   def validate!
-    stations.each{|s| station? s}
+    stations.each { |s| station? s }
     true
   end
 
