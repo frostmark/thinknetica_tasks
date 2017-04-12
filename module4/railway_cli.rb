@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RailwayCLI
   attr_accessor :stations, :trains, :routes, :carriages
   def initialize
@@ -18,20 +20,20 @@ class RailwayCLI
   private
 
   def reserve_seat
-    pass_carriages = @carriages.select{|c| c.type == 'passenger'}
+    pass_carriages = @carriages.select { |c| c.type == 'passenger' }
     if pass_carriages.empty?
-      puts "Passenger carriages do not yet exist"
+      puts 'Passenger carriages do not yet exist'
       return
     end
 
-    puts "List of carriages:"
-    pass_carriages.each_with_index { |c, i| puts "#{i+1} - #{c}"}
+    puts 'List of carriages:'
+    pass_carriages.each_with_index { |c, i| puts "#{i + 1} - #{c}" }
 
-    puts "Carriage number:"
+    puts 'Carriage number:'
     number = gets.chomp.to_i
     car = pass_carriages.fetch(number - 1)
     puts "Avialable seats: #{car.free_seats}"
-    puts "Seat number:"
+    puts 'Seat number:'
     seat = gets.chomp.to_i
     car.reserve_seat(seat)
     puts "Seat was number #{seat} was resevred!"
@@ -52,12 +54,12 @@ class RailwayCLI
   end
 
   def print_stations
-    @stations.each_with_index {|s,i| puts "#{i + 1} - #{s.name}"}
+    @stations.each_with_index { |s, i| puts "#{i + 1} - #{s.name}" }
   end
 
   def create_route
     if @stations.size <= 1
-      puts "Not enough stations!"
+      puts 'Not enough stations!'
       return
     end
 
@@ -81,25 +83,25 @@ class RailwayCLI
   def fill_capacity
     cargo_carriages = @carriages.select { |c| c.type == 'cargo' }
     if cargo_carriages.empty?
-      puts "Cargo carriages do not yet exist"
+      puts 'Cargo carriages do not yet exist'
       return
     end
 
-    puts "List of carriages:"
-    cargo_carriages.each_with_index { |c, i| puts "#{i+1} - #{c}"}
+    puts 'List of carriages:'
+    cargo_carriages.each_with_index { |c, i| puts "#{i + 1} - #{c}" }
 
-    puts "Carriage number:"
+    puts 'Carriage number:'
     number = gets.chomp.to_i
     car = cargo_carriages.fetch(number - 1)
-    puts "Fill with value:"
+    puts 'Fill with value:'
     capacity = gets.chomp.to_i
     car.fill_capacity(capacity)
-    puts "Capacity was changed!"
+    puts 'Capacity was changed!'
     puts car
   end
 
   def print_routes
-    @routes.each_with_index {|r,i| puts "#{i + 1} Route: #{r}"}
+    @routes.each_with_index { |r, i| puts "#{i + 1} Route: #{r}" }
   end
 
   def create_train
@@ -120,19 +122,18 @@ class RailwayCLI
 
     @trains << train
     puts "#{type} train with number #{train.number} was created!"
-
   rescue => e
     puts e.message
     retry
   end
 
   def print_trains
-    @trains.each_with_index{|t,i| puts "#{i + 1} – train №#{t.number} type: #{t.type} carriages: #{t.carriages.count}"}
+    @trains.each_with_index { |t, i| puts "#{i + 1} – train №#{t.number} type: #{t.type} carriages: #{t.carriages.count}" }
   end
 
   def assign_route
-    if [@trains, @routes].any? { |i| i.empty? }
-      puts "Trains or Routes not existed!"
+    if [@trains, @routes].any?(&:empty?)
+      puts 'Trains or Routes not existed!'
       return
     end
 
@@ -148,7 +149,7 @@ class RailwayCLI
 
     train.route = route
 
-    puts "Route added!"
+    puts 'Route added!'
   rescue => e
     puts e.message
     retry
@@ -157,26 +158,26 @@ class RailwayCLI
   def run_train
     print_trains
 
-    print "Train number: "
+    print 'Train number: '
     number = gets.chomp.to_i - 1
     train = @trains.fetch(number)
 
     unless train.route
-      puts "Train not have assigned route!"
+      puts 'Train not have assigned route!'
       return
     end
 
-    puts "How many stations to pass?"
+    puts 'How many stations to pass?'
     number = gets.chomp.to_i
 
-    number.times {
+    number.times do
       train.go
-    }
+    end
   end
 
   def trains_on_station
     if @stations.size <= 1
-      puts "Not enough stations!"
+      puts 'Not enough stations!'
       return
     end
 
@@ -185,27 +186,27 @@ class RailwayCLI
 
     station = @stations.fetch(number)
 
-    station.trains.each_with_index{|t,i| puts "#{i + 1} – train №#{t.number} type: #{t.type}"}
+    station.trains.each_with_index { |t, i| puts "#{i + 1} – train №#{t.number} type: #{t.type}" }
   end
 
   def add_route_station
-    if [@routes, @stations].any? { |i| i.empty? }
-      puts "Stations or Routes not existed!"
+    if [@routes, @stations].any?(&:empty?)
+      puts 'Stations or Routes not existed!'
       return
     end
 
     print_routes
-    puts "Route number:"
+    puts 'Route number:'
     number = gets.chomp.to_i - 1
     route = @routes.fetch(number)
 
     print_stations
-    puts "Staion number:"
+    puts 'Staion number:'
     number = gets.chomp.to_i - 1
     station = @stations.fetch(number)
 
     if route.stations.include? station
-      puts "Route already have this station!"
+      puts 'Route already have this station!'
       return
     end
 
@@ -214,7 +215,7 @@ class RailwayCLI
   end
 
   def create_carriage
-    puts "Carriage type (cargo or passenger):"
+    puts 'Carriage type (cargo or passenger):'
     type = gets.chomp.downcase
 
     case type
@@ -232,23 +233,23 @@ class RailwayCLI
   end
 
   def print_carriages
-    return "Carriages do not yet exist" if @carriages.empty?
-    puts "List of carriages:"
-    @carriages.each_with_index {|c, i| puts "#{i + 1} - #{c}"}
+    return 'Carriages do not yet exist' if @carriages.empty?
+    puts 'List of carriages:'
+    @carriages.each_with_index { |c, i| puts "#{i + 1} - #{c}" }
   end
 
   def attach_carriage
-    if [@trains, @carriages].any? { |i| i.empty? }
-      puts "Trains or Carriages not existed!"
+    if [@trains, @carriages].any?(&:empty?)
+      puts 'Trains or Carriages not existed!'
       return
     end
 
     print_trains
-    puts "Train number:"
+    puts 'Train number:'
     train = @trains.fetch(gets.chomp.to_i - 1)
 
     print_carriages
-    puts "Carriage number:"
+    puts 'Carriage number:'
     car = @carriages.fetch(gets.chomp.to_i - 1)
 
     if train.add_carriage(car)
@@ -258,18 +259,18 @@ class RailwayCLI
 
   def detach_carriage
     if @trains.empty?
-      puts "Trains not existed!"
+      puts 'Trains not existed!'
       return
     end
 
     print_trains
 
-    puts "Train number:"
+    puts 'Train number:'
     number = gets.chomp.to_i - 1
     train = @trains[number]
 
     if train.carriages.size.zero?
-      puts "Train not have carriages"
+      puts 'Train not have carriages'
       return
     end
 

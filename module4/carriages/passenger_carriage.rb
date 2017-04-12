@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'carriage'
 
 class PassengerCarriage < Carriage
@@ -30,7 +32,9 @@ class PassengerCarriage < Carriage
 
   def validate!
     super
-    msg = "Number of seats must be from #{SEATS_MIN_MAX.first} to #{SEATS_MIN_MAX.last}"
+    msg = "Number of seats must be\
+          from #{SEATS_MIN_MAX.first}\
+          to #{SEATS_MIN_MAX.last}"
     raise ArgumentError, msg unless SEATS_MIN_MAX.include? @seats
   end
 

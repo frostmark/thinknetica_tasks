@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def test(app)
   station_start = Station.new 'Start'
   station_end = Station.new 'End'

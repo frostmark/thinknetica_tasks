@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Train
   include Vendorable
   include InstanceCountable
@@ -34,17 +36,12 @@ class Train
   end
 
   def add_carriage(carriage)
-    if @speed.zero?
-      if valid_carriage? carriage
-        carriage.owner = self
-        @carriages << carriage
-        true
-      else
-        false
-      end
-    else
-      false
+    if @speed.zero? && valid_carriage?(carriage)
+      carriage.owner = self
+      @carriages << carriage
+      return true
     end
+    false
   end
 
   def remove_carriage
@@ -126,8 +123,17 @@ class Train
   end
 
   def validate!
-    raise ArgumentError, 'Number format should be like xxx-xx' if NUMBER_FORMAT !~ @number.to_s
-    raise ArgumentError, "Type must be one of #{TYPES.join(', ')}" unless TYPES.include? @type
-    raise ArgumentError, 'Train with this number exist!' if @@trains[@number]
+    if NUMBER_FORMAT !~ @number.to_s
+      raise ArgumentError,
+            'Number format should be like xxx-xx'
+    end
+    unless TYPES.include? @type
+      raise ArgumentError,
+            "Type must be one of #{TYPES.join(', ')}"
+    end
+    if @@trains[@number]
+      raise ArgumentError,
+            'Train with this number exist!'
+    end
   end
 end

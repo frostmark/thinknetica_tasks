@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class Carriage
   include Vendorable
   include InstanceCountable
 
-  TYPES = ['passenger', 'cargo']
+  TYPES = %w[passenger cargo].freeze
 
   attr_reader :type, :owner
 
@@ -14,9 +16,7 @@ class Carriage
   end
 
   def owner=(train)
-    if @owner
-      return false
-    end
+    return false if @owner
 
     @owner = train
   end
@@ -30,9 +30,7 @@ class Carriage
   end
 
   def release
-    unless @owner
-      return
-    end
+    return unless @owner
 
     train_number = @owner.number
     @owner = nil
