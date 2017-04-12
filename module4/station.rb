@@ -44,6 +44,8 @@ class Station
   protected
 
   def validate!
-    raise ArgumentError, 'Argument must have at least character of number' if NAME_FORMAT !~ name
+    if NAME_FORMAT !~ name
+      raise ArgumentError, 'Argument must have at least character of number'
+    end
   end
 end

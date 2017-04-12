@@ -27,6 +27,8 @@ class Route
   end
 
   def station?(station)
-    raise ArgumentError, 'Argument must be instance of Station class' unless station.is_a?(Station)
+    unless station.is_a?(Station)
+      raise ArgumentError, 'Argument must be instance of Station class'
+    end
   end
 end
