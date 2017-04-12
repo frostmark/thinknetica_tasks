@@ -123,11 +123,14 @@ class Train
   end
 
   def validate!
-    raise ArgumentError,
-          'Number format should be like xxx-xx' if NUMBER_FORMAT !~ @number.to_s
-    raise ArgumentError,
-          "Type must be one of #{TYPES.join(', ')}" unless TYPES.include? @type
-    raise ArgumentError,
-          'Train with this number exist!' if @@trains[@number]
+    if NUMBER_FORMAT !~ @number.to_s
+      raise ArgumentError,
+            'Number format should be like xxx-xx'
+    end
+    unless TYPES.include? @type
+      raise ArgumentError,
+            "Type must be one of #{TYPES.join(', ')}"
+    end
+    raise ArgumentError, 'Train with this number exist!' if @@trains[@number]
   end
 end

@@ -189,7 +189,9 @@ class RailwayCLI
 
     station = @stations.fetch(number)
 
-    station.trains.each_with_index { |t, i| puts "#{i + 1} – train №#{t.number} type: #{t.type}" }
+    station.trains.each_with_index do |t, i|
+      puts "#{i + 1} – train №#{t.number} type: #{t.type}"
+    end
   end
 
   def add_route_station
@@ -256,7 +258,7 @@ class RailwayCLI
     car = @carriages.fetch(gets.chomp.to_i - 1)
 
     if train.add_carriage(car)
-      puts "#{car.type.capitalize} carriage was attached to train #{train.number}"
+      p "#{car.type.capitalize} carriage was attached to train #{train.number}"
     end
   end
 
