@@ -128,7 +128,10 @@ class RailwayCLI
   end
 
   def print_trains
-    @trains.each_with_index { |t, i| puts "#{i + 1} – train №#{t.number} type: #{t.type} carriages: #{t.carriages.count}" }
+    @trains.each_with_index do |t, i|
+      p "#{i + 1} – train №#{t.number}\
+        type: #{t.type} carriages: #{t.carriages.count}"
+    end
   end
 
   def assign_route

@@ -24,13 +24,12 @@ class Route
   protected
 
   def validate!
-    stations.each { |s| station? s }
+    stations.each { |s| station! s }
     true
   end
 
-  def station?(station)
-    unless station.is_a?(Station)
-      raise ArgumentError, 'Argument must be instance of Station class'
-    end
+  def station!(station)
+    return if station.is_a?(Station)
+    raise ArgumentError, 'Argument must be instance of Station class'
   end
 end

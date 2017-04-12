@@ -56,7 +56,7 @@ class Train
   end
 
   def route=(route)
-    return if @station_number > 0
+    return if @station_number.positive?
 
     @route = route
     @route.stations[@station_number].taking_train self
@@ -123,17 +123,11 @@ class Train
   end
 
   def validate!
-    if NUMBER_FORMAT !~ @number.to_s
-      raise ArgumentError,
-            'Number format should be like xxx-xx'
-    end
-    unless TYPES.include? @type
-      raise ArgumentError,
-            "Type must be one of #{TYPES.join(', ')}"
-    end
-    if @@trains[@number]
-      raise ArgumentError,
-            'Train with this number exist!'
-    end
+    raise ArgumentError,
+          'Number format should be like xxx-xx' if NUMBER_FORMAT !~ @number.to_s
+    raise ArgumentError,
+          "Type must be one of #{TYPES.join(', ')}" unless TYPES.include? @type
+    raise ArgumentError,
+          'Train with this number exist!' if @@trains[@number]
   end
 end

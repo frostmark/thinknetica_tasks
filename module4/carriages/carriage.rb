@@ -22,7 +22,9 @@ class Carriage
   end
 
   def to_s
-    "Carriage type: #{@type}, associated with train: #{@owner&.number ? @owner.number : 'None'}"
+    "Carriage type: #{@type},\
+    associated with train:\
+    #{@owner&.number ? @owner.number : 'None'}"
   end
 
   def type=(type)
@@ -31,8 +33,6 @@ class Carriage
 
   def release
     return unless @owner
-
-    train_number = @owner.number
     @owner = nil
 
     self
