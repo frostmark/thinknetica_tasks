@@ -3,8 +3,11 @@
 class Station
   include Validateable
   include InstanceCountable
+  extend Accessors
 
   attr_reader :name, :trains
+
+  attr_accessor_with_history :test
 
   NAME_FORMAT = /\A[a-z]+|\d+\z/i
 
@@ -15,6 +18,8 @@ class Station
     @trains = []
 
     validate!
+
+    debugger
 
     @@stations << self
     register_instance
