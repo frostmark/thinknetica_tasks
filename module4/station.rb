@@ -11,6 +11,8 @@ class Station
 
   NAME_FORMAT = /\A[a-z]+|\d+\z/i
 
+  validate :name, :format, NAME_FORMAT
+
   @@stations = []
 
   def initialize(name)
@@ -18,8 +20,6 @@ class Station
     @trains = []
 
     validate!
-
-    debugger
 
     @@stations << self
     register_instance
@@ -45,14 +45,6 @@ class Station
   class << self
     def all
       @@stations
-    end
-  end
-
-  protected
-
-  def validate!
-    if NAME_FORMAT !~ name
-      raise ArgumentError, 'Argument must have at least character of number'
     end
   end
 end
