@@ -11,7 +11,6 @@ module Validateable
       @validations ||= []
       @validations << { attr.to_sym => [type.to_sym, arg.first].compact }
       @validations.uniq
-      debugger
     end
   end
 
@@ -31,16 +30,16 @@ module Validateable
 
     private
 
-    def presence!(validate, *value)
-      raise "'#{validate}' is nil or empty" if validate.nil? || validate.to_s.empty?
+    def presence!(attr, *value)
+      raise "'#{attr}' is nil or empty" if attr.nil? || attr.to_s.empty?
     end
 
-    def format!(validate, value)
-      raise "Wrong format of argument:'#{validate}'" unless validate =~ value
+    def format!(attr, value)
+      raise "Wrong format of argument:'#{attr}'" unless attr =~ value
     end
 
     def type!(attr, value)
-      raise "Wrong type of argument:'#{attr}'" unless validate.is_a?(value)
+      raise "Wrong type of argument:'#{attr}'" unless attr.is_a?(value)
     end
   end
 end
